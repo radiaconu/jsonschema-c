@@ -231,6 +231,7 @@ json_handle_required_keyword(struct json_object *schema_value, struct lh_table *
 	for (i=0; i< json_object_array_length(schema_value); i++){
 		const char* required_key = json_object_get_string(json_object_array_get_idx(schema_value, i));
 		if(lh_table_lookup_entry(instance_table,required_key) == NULL){
+			printf("req: %s not found\n", required_key);
 			return json_required_error;
 		}
 	}
@@ -724,16 +725,18 @@ json_validate_instance(struct json_object *instance, struct json_object *schema)
 		/* a json file can either contain an object or an array of objects */
 		if(json_object_get_type(instance) == json_type_array){
 			instance_object.key = "root array";
-			json_validate_array_instance(instance_object);
+			return json_validate_array_instance(instance_object);
 		}else{
 			instance_object.key = "root object";
-			json_validate_object_instance(instance_object);
+			return json_validate_object_instance(instance_object);
 		}
+		//TODO: doesn't go next
 		// retrieve errors
 		struct json_error *errors = malloc((256 * sizeof(struct json_error))) ;
 		int num_errors;
 		errors = json_add_error(0,NULL,-1,&num_errors);
 		if(num_errors > 0){
+			printf("errors: %d\n", num_errors);
 			json_printf_colored(ANSI_COLOR_RED,"\nInvalid JSON file! %d error(s) found",num_errors);
 			int i;
 			for(i=0; i< num_errors; i++){

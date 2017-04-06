@@ -34,12 +34,12 @@ json_error_messages[] = {  "Invalid value",
 
 void
 json_printf_colored(char* color, char *message, ...) {
-	printf("%s",color);
+	/*printf("%s",color);
 	va_list vl;
 	va_start(vl,message);
 	vprintf (message,vl);
 	va_end(vl);
-	printf ("\n" ANSI_COLOR_RESET);
+	printf ("\n" ANSI_COLOR_RESET);*/
 }
 
 struct json_error *

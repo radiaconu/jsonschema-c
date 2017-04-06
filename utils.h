@@ -71,7 +71,7 @@ json_error_values {
     json_format_error
 };
 
-char* json_error_messages[MAX_ERR_MSGS];
+//char* json_error_messages[MAX_ERR_MSGS];
 
 /**
  * @brief Prints a colored message in the terminal.

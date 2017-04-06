@@ -173,7 +173,7 @@ json_validate_array_items(json_object *jobj) {
 		jvalue = json_object_array_get_idx(jobj, i); /*Getting the array element at position i*/
 		type = json_object_get_type(jvalue);
 		if (type != json_type_object) {
-			printf("array item #%d must be an object",i);
+			json_printf_colored(ANSI_COLOR_RED, "array item #%d must be an object",i);
 			return 0;
 		}
 	}
@@ -338,14 +338,14 @@ json_check_allowed_values(const int keyword_position,struct json_object * value,
 		switch(allowed_values[i]) {
 		case json_strictly_gt_0:
 			if(json_object_get_int(value) < 1){
-				printf("value: %d\n",json_object_get_int(value));
+				//printf("value: %d\n",json_object_get_int(value));
 				json_printf_colored(ANSI_COLOR_RED ,"value must be strictly greater than 0. ");
 				res = 0;
 			}
 		break;
 		case json_gt_or_eqt_0:
 			if(json_object_get_int(value) < 0){
-				printf("value: %d\n",json_object_get_int(value));
+				//printf("value: %d\n",json_object_get_int(value));
 				json_printf_colored(ANSI_COLOR_RED ,"value must be greater than or equal to 0. ");
 				res = 0;
 			}
@@ -479,7 +479,7 @@ json_validate_object(json_object *jobj, const int last_pos) {
 		struct json_object * value = (struct json_object *)entry->v;
 		int result;
 
-		printf("**key: %*s\n", (int) strlen(key)+(obj_pos*2),key);
+		//printf("**key: %*s\n", (int) strlen(key)+(obj_pos*2),key);
 		type = json_object_get_type(value);
 		//validate the keyword of the object first
 		result = json_validate_keyword(entry,object_table);
@@ -510,7 +510,6 @@ json_validate_schema(struct json_object *schema) {
 
 int 
 json_validate_schema_from_file(const char* filename) {
-	int res;
 	json_object *schema = json_object_from_file(filename);
 	if(schema == NULL) {
 		json_printf_colored("could not load schema from file.",ANSI_COLOR_RED);
