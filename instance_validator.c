@@ -231,7 +231,6 @@ json_handle_required_keyword(struct json_object *schema_value, struct lh_table *
 	for (i=0; i< json_object_array_length(schema_value); i++){
 		const char* required_key = json_object_get_string(json_object_array_get_idx(schema_value, i));
 		if(lh_table_lookup_entry(instance_table,required_key) == NULL){
-			printf("req: %s not found\n", required_key);
 			return json_required_error;
 		}
 	}
@@ -434,7 +433,7 @@ json_validate_object_keywords(struct jsonschema_object instance_object){
 	return 1; 
 }
 
-int 
+static int 
 inline json_handle_enum_keyword(struct json_object *schema_value, struct json_object *instance_entry){
 	int i;
 	for(i = 0; i< json_object_array_length(schema_value); i++){
@@ -736,7 +735,6 @@ json_validate_instance(struct json_object *instance, struct json_object *schema)
 		int num_errors;
 		errors = json_add_error(0,NULL,-1,&num_errors);
 		if(num_errors > 0){
-			printf("errors: %d\n", num_errors);
 			json_printf_colored(ANSI_COLOR_RED,"\nInvalid JSON file! %d error(s) found",num_errors);
 			int i;
 			for(i=0; i< num_errors; i++){
