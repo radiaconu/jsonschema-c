@@ -46,7 +46,9 @@ struct json_error *
 json_add_error(int error_value,char* key, int obj_pos,int * size){
 	static struct json_error errors[256];
 	static int i = 0;
+	//printf("i = %d\n", i);
 	//if we want to add a new error
+	i=0;
 	if(error_value < 0 && key != NULL && obj_pos >= 0){
 		errors[i].key = key;
 		errors[i].obj_pos = obj_pos;
